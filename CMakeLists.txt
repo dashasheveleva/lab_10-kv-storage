@@ -47,8 +47,8 @@ find_package(Boost CONFIG REQUIRED
         program_options)
 
 add_library(${PROJECT_NAME} STATIC
-        ${CMAKE_CURRENT_SOURCE_DIR}sources/database.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}sources/logsettings.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/sources/database.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/sources/logsettings.cpp)
 
 add_executable(demo
   ${CMAKE_CURRENT_SOURCE_DIR}/demo/main.cpp
@@ -72,10 +72,7 @@ if(BUILD_TESTS)
   add_executable(tests
           ${CMAKE_CURRENT_SOURCE_DIR}/tests/tests.cpp
   )
-  target_link_libraries(tests ${PROJECT_NAME}
-          tests
-          template
-          GTest::gtest_main)
+  target_link_libraries(tests ${PROJECT_NAME} GTest::gtest_main)
   enable_testing()
   add_test(NAME unit_tests COMMAND tests)
 endif()
