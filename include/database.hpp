@@ -13,10 +13,8 @@
 
 #include <mutex>
 #include <queue>
-#include <string>
 #include <thread>
 #include <vector>
-#include <boost/log/trivial.hpp>
 
 #include <ThreadPool.hpp>
 #include <queue.hpp>
