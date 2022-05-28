@@ -1,8 +1,17 @@
 // Copyright 2022 Shevelyova Darya photodoshfy@gmail.com
 
-#ifndef INCLUDE_EXAMPLE_HPP_
-#define INCLUDE_EXAMPLE_HPP_
+#ifndef INCLUDE_LOGSETTINGS_HPP_
+#define INCLUDE_LOGSETTINGS_HPP_
 
-auto example() -> void;
+#include <string>
+#include <boost/log/core.hpp>
+#include <boost/log/trivial.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
+#include <boost/log/utility/setup/console.hpp>
+#include <boost/log/utility/setup/file.hpp>
 
-#endif // INCLUDE_EXAMPLE_HPP_
+boost::log::trivial::severity_level choose_level(
+    const std::string& lev);
+void logs(const std::string& lev);
+
+#endif  // INCLUDE_LOGSETTINGS_HPP_

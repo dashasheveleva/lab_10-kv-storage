@@ -26,21 +26,29 @@ string(APPEND CMAKE_CXX_FLAGS " -pedantic -Werror -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS " -Wno-unused-command-line-argument")
 string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 
-# new versions of cmake contain gtest search files
-# commented out to increase the build speed.
-# hunter_add_package(GTest)
+hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
 hunter_add_package(rocksdb)
 find_package(RocksDB CONFIG REQUIRED)
 
-hunter_add_package(Boost COMPONENTS program_options)
-find_package(Boost CONFIG REQUIRED program_options)
+hunter_add_package(Boost COMPONENTS
+        filesystem
+        log
+        system
+        thread
+        program_options)
+find_package(Boost CONFIG REQUIRED
+        filesystem
+        log
+        log_setup
+        system
+        thread
+        program_options)
 
 add_library(${PROJECT_NAME} STATIC
-  # enum your files and delete this comment
-        ${CMAKE_CURRENT_SOURCE_DIR}/sources/database.cpp
-        sources/logsettings.cpp sources/queue.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}sources/database.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}sources/logsettings.cpp)
 
 add_executable(demo
   ${CMAKE_CURRENT_SOURCE_DIR}/demo/main.cpp
@@ -52,13 +60,22 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 )
 
 target_link_libraries(demo ${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME}
+        Boost::program_options
+        Boost::log_setup
+        Boost::log
+        Boost::thread
+        Boost::filesystem
+        RocksDB::rocksdb)
 
 if(BUILD_TESTS)
   add_executable(tests
-    # TODO: enum your files and delete this comment
           ${CMAKE_CURRENT_SOURCE_DIR}/tests/tests.cpp
   )
-  target_link_libraries(tests ${PROJECT_NAME} GTest::gtest_main)
+  target_link_libraries(tests ${PROJECT_NAME}
+          tests
+          template
+          GTest::gtest_main)
   enable_testing()
   add_test(NAME unit_tests COMMAND tests)
 endif()
