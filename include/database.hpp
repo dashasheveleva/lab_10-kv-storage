@@ -9,14 +9,13 @@
 #include <rocksdb/options.h>
 #include <rocksdb/slice.h>
 #include <rocksdb/advanced_options.h>
-#include <picosha2.h>
-
+#include "../third-party/PicoSHA2/picosha2.h"
+#include "../third-party/ThreadPool.h"
 #include <mutex>
 #include <queue>
 #include <thread>
 #include <vector>
 
-#include <ThreadPool.hpp>
 #include <queue.hpp>
 #include <database.hpp>
 
